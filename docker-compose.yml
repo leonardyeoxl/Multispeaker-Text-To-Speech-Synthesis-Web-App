@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+  voice-base:
+    build:
+      context: ./component/build
+      dockerfile: Dockerfile.orig
+    ports:
+      - "${orig_expose_port}"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=${nvidia_visible_device}
+      - DEBUG=${debug}
+    volumes:
+      - "${volume}"
+    runtime: nvidia
+    ipc: host
+    init: true
+    devices: 
+      - "/dev/snd"
+    tty: true
+    entrypoint: ["sh", "-c", "/usr/sbin/sshd && bash"]
