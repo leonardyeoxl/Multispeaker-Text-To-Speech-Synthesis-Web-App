@@ -8,4 +8,6 @@ __pycache__/
 # Environments
 .env
 
+reference/**
+
 # End of https://www.gitignore.io/api/python
