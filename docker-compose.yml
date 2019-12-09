@@ -1,20 +1,40 @@
 version: '2.3'
 services:
-  voice-base:
-    build:
-      context: ./component/build
-      dockerfile: Dockerfile.orig
-    ports:
-      - "${orig_expose_port}"
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=${nvidia_visible_device}
-      - DEBUG=${debug}
-    volumes:
-      - "${volume}"
-    runtime: nvidia
-    ipc: host
-    init: true
-    devices: 
-      - "/dev/snd"
-    tty: true
-    entrypoint: ["sh", "-c", "/usr/sbin/sshd && bash"]
+    api:
+        build:
+            context: component
+            dockerfile: api/build/Dockerfile
+        ports:
+            - "8080:8080"
+        hostname: api
+        networks:
+            - tts_network
+    master:
+        build:
+            context: component
+            dockerfile: master/build/Dockerfile
+        hostname: master
+        networks:
+            tts_network:
+                aliases:
+                    - master
+    tts:
+        build:
+            context: component
+            dockerfile: tts/build/Dockerfile
+        environment:
+            - NVIDIA_VISIBLE_DEVICES=${nvidia_visible_device}
+        volumes:
+            - "${volume_mount}:/opt/app/model"
+            - "${cuda_lib_path}:/usr/local/nvidia/lib64"
+        runtime: nvidia
+        hostname: tts
+        networks:
+            - tts_network
+
+networks:
+    tts_network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.20.10.0/24

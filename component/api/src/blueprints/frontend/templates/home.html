@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TTS!</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/all.min.css')}}">
+    </head>
+    <body>
+        <div class="container text-center">
+            <!-- Audio Selection -->
+            <div>
+                <h3 class="display-4">Add audio!</h1>
+            </div>
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-5 shadow-sm" id="upload-card">
+                    <div class="card-header">
+                        <h4>Upload</h4>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary" id='upload-btn'>
+                            <i class="fas fa-file-upload"></i>
+                        </button>
+                        <input id="upload-input" type="file" accept="audio/x-wav" name="file" hidden/>
+                        <p id="upload-name" class="mx-auto"> </p>
+                    </div>
+                </div>
+                <div class="card mb-5 shadow-sm" id="record-card">
+                    <div class="card-header">
+                        <h4>Record</h4>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary" id='record-btn'>
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <p id="record-name" class="mx-auto"> </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Text Input -->
+            <div>
+                <textarea id="text-input"></textarea>
+            </div>
+            <!-- Generate button -->
+            <div>
+                <button class="btn btn-primary" id='submit-btn'>
+                    Submit
+                </button>
+            </div>
+            <!-- Result -->
+            <div class="card-deck mb-3 text-center">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Audio</th>
+                            <th scope="col">Text</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script>
+        //update format
+        String.prototype.format = function () {
+            var a = this;
+            for (var k in arguments) {
+                a = a.replace(new RegExp("\\{" + k + "\\}", 'g'), arguments[k]);
+            }
+            return a
+        }
+    </script>
+    <script src="{{url_for('static', filename='js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/recorder.js')}}"></script>
+    <script src="{{url_for('static', filename='js/recorderWorker.js')}}"></script>
+    <script src="{{url_for('static', filename='js/date.js')}}"></script>
+    <script src="{{url_for('static', filename='js/wavesurfer.microphone.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/wavesurfer.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+</html>
