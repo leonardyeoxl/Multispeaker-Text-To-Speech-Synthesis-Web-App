@@ -162,6 +162,7 @@ $("#record-btn").click(function(e){
 
 $("#submit-btn").click(function(e){
     e.preventDefault();
+    $("#table-body tr").remove();
     $("#loading-section").append("<div class='d-flex align-items-center'><strong>Processing audio and text...</strong><div class='spinner-border ml-auto' role='status' aria-hidden='true'></div></div>");
     call_tts("/api/tts");
 });
@@ -189,7 +190,7 @@ function call_tts(url){
             if (result["status"] === "ok"){
                 // Drop all rows
                 $("#table-body tr").remove();
-                $("#loading-section").remove();
+                $("#loading-section div").remove();
 
                 // // Add to result as table row
                 // $.each(result["data"], function(index, item_data){
