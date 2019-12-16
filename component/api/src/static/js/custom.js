@@ -93,11 +93,17 @@ function GetAudioBlob(item_data){
 //     return "<tr><td>{0}</td><td>{1}</td></tr>".format(audio_html, g_text_array[index]);
 // }
 
+function ConvertBlobToDownloadURL(audio_blob_url){
+    var download_created_date = "{0}{1}".format(new Date().toISOString(), '.wav')
+    return "<a class='btn btn-primary' href='{0}' role='button' download='{1}'>Download {1}</a>".format(audio_blob_url, download_created_date);
+}
+
 function GetResultRow(index, audio_blob){
     // debug
     console.log(g_text_array[index]); // Assumption "0" == 0
     var audio_html = "<audio controls><source src='{0}' type='audio/wav'></audio>".format(audio_blob);
-    return "<tr><td>{0}</td><td>{1}</td></tr>".format(audio_html, g_text_array[index]);
+    var wav_url_download = ConvertBlobToDownloadURL(audio_blob);
+    return "<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>".format(audio_html, g_text_array[index], wav_url_download);
 }
 
 // Event listeners
@@ -156,7 +162,7 @@ $("#record-btn").click(function(e){
 
 $("#submit-btn").click(function(e){
     e.preventDefault();
-
+    $("#loading-section").append("<div class='d-flex align-items-center'><strong>Processing audio and text...</strong><div class='spinner-border ml-auto' role='status' aria-hidden='true'></div></div>");
     call_tts("/api/tts");
 });
 
@@ -183,6 +189,7 @@ function call_tts(url){
             if (result["status"] === "ok"){
                 // Drop all rows
                 $("#table-body tr").remove();
+                $("#loading-section").remove();
 
                 // // Add to result as table row
                 // $.each(result["data"], function(index, item_data){

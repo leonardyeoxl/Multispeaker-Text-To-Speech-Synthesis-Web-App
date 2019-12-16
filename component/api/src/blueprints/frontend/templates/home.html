@@ -9,12 +9,14 @@
         <div class="container text-center">
             <!-- Audio Selection -->
             <div>
-                <h3 class="display-4">Add audio!</h1>
+                <nav class="navbar">
+                    <span class="navbar-brand mb-0 h1">Text to Speech Voice Cloning</span>
+                </nav>
             </div>
             <div class="card-deck mb-3 text-center">
                 <div class="card mb-5 shadow-sm" id="upload-card">
                     <div class="card-header">
-                        <h4>Upload</h4>
+                        <h4>Upload Audio</h4>
                     </div>
                     <div class="card-body">
                         <button class="btn btn-primary" id='upload-btn'>
@@ -26,7 +28,7 @@
                 </div>
                 <div class="card mb-5 shadow-sm" id="record-card">
                     <div class="card-header">
-                        <h4>Record</h4>
+                        <h4>Record Audio</h4>
                     </div>
                     <div class="card-body">
                         <button class="btn btn-primary" id='record-btn'>
@@ -38,27 +40,39 @@
             </div>
             <!-- Text Input -->
             <div>
-                <textarea id="text-input"></textarea>
+                <form role = "form">
+                    <div class = "form-group">
+                       <textarea id="text-input" class = "form-control" rows = "3" placeholder = "Your speech"></textarea>
+                    </div>
+                    <div class = "form-group">
+                        <!-- Generate button -->
+                        <button class="btn btn-primary" id='submit-btn'>
+                            Submit
+                        </button>
+                    </div>
+                    <div class = "form-group">
+                        <div id="loading-section"></div>
+                    </div>
+                 </form>
             </div>
-            <!-- Generate button -->
-            <div>
-                <button class="btn btn-primary" id='submit-btn'>
-                    Submit
-                </button>
-            </div>
+
+            
+
             <!-- Result -->
             <div class="card-deck mb-3 text-center">
-                <table>
-                    <thead>
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
                             <th scope="col">Audio</th>
                             <th scope="col">Text</th>
+                            <th scope="col">Download</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
                     </tbody>
                 </table>
             </div>
+
         </div>
     </body>
     <script>
